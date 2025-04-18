@@ -18,7 +18,12 @@ header {
   background: #fff;
   font-family: monospace;
 }
-
+.filter-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: break-spaces;
+}
 .pixel-icon {
   font-size: 1.5rem;
   vertical-align: middle;
@@ -26,13 +31,20 @@ header {
 }
 
 h1 {
-  margin: 0;
+  margin: 0 0 20px 0;
+  color: #fff;
+  background: #000 !important;
+  box-shadow: none !important;
+  text-shadow: 2px 2px #ff4081;
+  outline: 2px solid #ff4081;
+  outline-offset: 1px;
+  padding: 2px 4px;
 }
 
 #filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .filter-group {
@@ -68,7 +80,7 @@ input[type="checkbox"] {
 
 #tools-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem;
 }
 
@@ -80,10 +92,11 @@ article.tool {
   border-radius: 4px;
   transition: transform 0.2s;
   font-family: sans-serif;
+  
 }
 
 article.tool:hover {
-  transform: scale(1.02);
+  box-shadow: 8px 8px 4px #999;
 }
 
 article.tool h2 {
@@ -99,10 +112,10 @@ article.tool h2 a {
   color: #ff4081;
   position: relative;
   padding: 2px 4px;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
-article.tool h2 a:hover {
+article.tool:hover h2 a {
   background: #000;
   color: #fff;
   text-shadow: 2px 2px #ff4081;
@@ -110,7 +123,7 @@ article.tool h2 a:hover {
   outline-offset: 1px;
 }
 
-article.tool h2 a:active {
+article.tool:active h2 a {
   transform: translate(2px, 2px);
   text-shadow: none;
 }
@@ -137,3 +150,9 @@ article.tool ul li .pixel-icon {
   font-size: 1.2rem;
   margin-right: 0.5rem;
 } 
+.tool-item {
+  display: flex;
+  align-items: start;
+  padding: 2px 0;
+  gap: 0.5rem;
+}

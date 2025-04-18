@@ -1,143 +1,253 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ML Ops Directory</title>
-  <meta name="description" content="Directory of ML Ops tools with filtering options for license, category, platforms, languages, and more.">
-  <link rel="stylesheet" href="styles.css">
-  <!-- Structured Data for SEO -->
-  <script type="application/ld+json">
-    
-  </script>
-
-  
-</head>
-<body>
-  <header>
-    <h1 class="pixel-border"><span class="pixel-icon">👾</span>ML Ops Directory</h1>
-    <div id="filters">
-      <div class="filter-group">
-        <label for="filter-name"><span class="pixel-icon">🔍</span>Name:</label>
-        <input type="text" id="filter-name" placeholder="Search by name">
-      </div>
-      <div class="filter-group">
-        <label for="filter-category"><span class="pixel-icon">📂</span>Category:</label>
-        <select id="filter-category"><option value="">All</option></select>
-      </div>
-      <div class="filter-group">
-        <label for="filter-license"><span class="pixel-icon">📄</span>License:</label>
-        <select id="filter-license"><option value="">All</option></select>
-      </div>
-      <div class="filter-group" style="flex-direction: row; align-items: center;">
-        <label><input type="checkbox" id="filter-open-source"><span class="pixel-icon">🔓</span>Open Source</label>
-        <label><input type="checkbox" id="filter-free-tier"><span class="pixel-icon">🎁</span>Free Tier</label>
-      </div>
-      <div class="filter-group">
-        <label for="filter-platforms"><span class="pixel-icon">💻</span>Platforms:</label>
-        <select id="filter-platforms" multiple size="3"></select>
-      </div>
-      <div class="filter-group">
-        <label for="filter-languages"><span class="pixel-icon">📝</span>Languages:</label>
-        <select id="filter-languages" multiple size="3"></select>
-      </div>
-      <div class="filter-group">
-        <label for="filter-integrations"><span class="pixel-icon">🧩</span>Integrations:</label>
-        <select id="filter-integrations" multiple size="3"></select>
-      </div>
-    </div>
-  </header>
-
-  <main id="tools-list"></main>
-
-  <script>
-    let tools = [];
-
-    async function loadToolsData() {
-      try {
-        const response = await fetch('tools.json');
-        if (!response.ok) {
-          throw new Error('Failed to load tools data');
-        }
-        tools = await response.json();
-        initializeApp();
-      } catch (error) {
-        console.error('Error loading tools:', error);
-        document.getElementById('tools-list').textContent = 'Error loading tools data. Please try again later.';
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FZ42W10YN3"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
-    }
+      gtag('js', new Date());
 
-    function unique(arr) { return [...new Set(arr)]; }
-    
-    function populateSelect(id, values) {
-      const s = document.getElementById(id);
-      values.forEach(v => { const o = document.createElement('option'); o.value=v; o.textContent=v; s.appendChild(o); });
-    }
+      gtag('config', 'G-FZ42W10YN3');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Ops Directory | Find and Filter Machine Learning Operations Tools</title>
+    <meta
+      name="description"
+      content="Comprehensive directory of ML Ops tools. Filter by license, category, platforms, programming languages, and integrations to find the perfect tool for your ML pipeline."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta
+      property="og:title"
+      content="ML Ops Directory | Find and Filter Machine Learning Operations Tools | Curated List of ML Ops Tools"
+    />
+    <meta
+      property="og:description"
+      content="Comprehensive curateddirectory of ML Ops tools. Filter by license, category, platforms, programming languages, and integrations to find the perfect tool for your ML pipeline."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://mlops-tools.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1
+        class="pixel-border"
+        style="display: flex; flex-direction: column; gap: 10px; max-width: fit-content"
+      >
+        <div style="display: flex; align-items: center">👾 ML Ops Directory</div>
+        <span style="font-size: 0.7rem; margin: 0 auto">
+          Curated List of ML Ops Tools</span
+        >
+      </h1>
+      <div id="filters">
+        <div class="filter-group">
+          <label for="filter-name"
+            ><span class="pixel-icon">🔍</span>Search by keywords:</label
+          >
+          <input type="text" id="filter-name" placeholder="Search by keywords" />
+        </div>
+        <div class="filter-group">
+          <label for="filter-category"
+            ><span class="pixel-icon">📂</span>Category:</label
+          >
+          <select multiselect-search="true" id="filter-category">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-license"><span class="pixel-icon">📄</span>License:</label>
+          <select multiselect-search="true" id="filter-license">
+            <option value="">All</option>
+          </select>
+        </div>
 
-    function renderTools(list) {
-      const c = document.getElementById('tools-list'); c.innerHTML='';
-      if (!list.length) return c.textContent='No tools found.';
-      
-      const formatList = (arr) => Array.isArray(arr) ? arr.join(', ') : 'Not specified';
-      const formatBoolean = (value) => value === undefined ? 'Not specified' : value ? 'Yes' : 'No';
-      
-      list.forEach(t=>{
-        const a=document.createElement('article'); a.className='tool';
-        a.innerHTML=`<h2><span class="pixel-icon">👾</span> <a href="${t.documentation ?? '#'}" target="_blank" rel="noopener">${t.name ?? 'Unnamed Tool'}</a></h2>
+        <div class="filter-group">
+          <label for="filter-platforms"
+            ><span class="pixel-icon">💻</span>Platforms:</label
+          >
+          <select multiselect-search="true" id="filter-platforms" multiple size="3"></select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-languages"
+            ><span class="pixel-icon">📝</span>Languages:</label
+          >
+          <select multiselect-search="true" id="filter-languages" multiple size="3"></select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-integrations"
+            ><span class="pixel-icon">🧩</span>Integrations:</label
+          >
+          <select
+            multiselect-search="true"
+            id="filter-integrations"
+            multiple
+            size="3"
+          ></select>
+        </div>
+        <div
+          class="filter-group"
+          style="flex-direction: row; align-items: center; gap: 14px"
+        >
+          <label class="filter-checkbox-label"
+            ><input type="checkbox" id="filter-open-source" />Open Source</label
+          >
+          <label class="filter-checkbox-label"
+            ><input type="checkbox" id="filter-free-tier" />Free Tier</label
+          >
+        </div>
+      </div>
+    </header>
+
+    <main id="tools-list"></main>
+    <script src="multidropdown.js"></script>
+    <script>
+      let tools = [];
+
+      async function loadToolsData() {
+        try {
+          const response = await fetch('tools.json');
+          if (!response.ok) {
+            throw new Error('Failed to load tools data');
+          }
+          tools = await response.json();
+          initializeApp();
+        } catch (error) {
+          console.error('Error loading tools:', error);
+          document.getElementById('tools-list').textContent =
+            'Error loading tools data. Please try again later.';
+        }
+      }
+
+      function unique(arr) {
+        return [...new Set(arr)];
+      }
+
+      function populateSelect(id, values) {
+        const s = document.getElementById(id);
+        values.forEach((v) => {
+          const o = document.createElement('option');
+          o.value = v;
+          o.textContent = v;
+          s.appendChild(o);
+        });
+      }
+
+      function renderTools(list) {
+        const c = document.getElementById('tools-list');
+        c.innerHTML = '';
+        if (!list.length) return (c.textContent = 'No tools found.');
+
+        const formatList = (arr) =>
+          Array.isArray(arr) ? arr.join(', ') : 'Not specified';
+        const formatBoolean = (value) =>
+          value === undefined ? 'Not specified' : value ? 'Yes' : 'No';
+
+        list.forEach((t) => {
+          const a = document.createElement('article');
+          a.className = 'tool';
+          a.innerHTML = `<h2><span class="pixel-icon">👾</span> <a href="${t.documentation ?? '#'}" target="_blank" rel="noopener">${t.name ?? 'Unnamed Tool'}</a></h2>
           <p>${t.description ?? 'No description available.'}</p>
           <ul>
-            <li><span class="pixel-icon">📂</span><strong>Category:</strong> ${t.category ?? 'Uncategorized'}</li>
-            <li><span class="pixel-icon">📄</span><strong>License:</strong> ${t.license ?? 'Not specified'}</li>
-            <li><span class="pixel-icon">🔓</span><strong>Open Source:</strong> ${formatBoolean(t.open_source)}</li>
-            <li><span class="pixel-icon">🎁</span><strong>Free Tier:</strong> ${formatBoolean(t.free_tier)}</li>
-            <li><span class="pixel-icon">💻</span><strong>Platforms:</strong> ${formatList(t.supported_platforms)}</li>
-            <li><span class="pixel-icon">📝</span><strong>Languages:</strong> ${formatList(t.languages)}</li>
-            <li><span class="pixel-icon">🧩</span><strong>Integrations:</strong> ${formatList(t.integrations)}</li>
+            <li class="tool-item"><span class="pixel-icon">📂</span><strong>Category:</strong> ${t.category ?? 'Uncategorized'}</li>
+            <li class="tool-item"><span class="pixel-icon">📄</span><strong>License:</strong> ${t.license ?? 'Not specified'}</li>
+            <li class="tool-item"><span class="pixel-icon">🔓</span><strong>Open Source:</strong> ${formatBoolean(t.open_source)}</li>
+            <li class="tool-item"><span class="pixel-icon">🎁</span><strong>Free Tier:</strong> ${formatBoolean(t.free)}</li>
+            <li class="tool-item"><span class="pixel-icon">💻</span><strong>Platforms:</strong> ${formatList(t.supported_platforms)}</li>
+            <li class="tool-item"><span class="pixel-icon">📝</span><strong>Languages:</strong> ${formatList(t.languages)}</li>
+            <li class="tool-item"><span class="pixel-icon">🧩</span><strong>Integrations:</strong> ${formatList(t.integrations)}</li>
           </ul>`;
-        c.appendChild(a);
-      });
-    }
+          c.appendChild(a);
+        });
+      }
 
-    function applyFilters() {
-      let f=tools.slice();
-      const name=document.getElementById('filter-name').value.toLowerCase(); 
-      if(name) f=f.filter(t=>t.name?.toLowerCase().includes(name));
-      
-      const cat=document.getElementById('filter-category').value; 
-      if(cat) f=f.filter(t=>t.category === cat);
-      
-      const lic=document.getElementById('filter-license').value; 
-      if(lic) f=f.filter(t=>t.license === lic);
-      
-      if(document.getElementById('filter-open-source').checked) f=f.filter(t=>t.open_source);
-      if(document.getElementById('filter-free-tier').checked) f=f.filter(t=>t.free_tier);
-      
-      const sel=id=>Array.from(document.getElementById(id).selectedOptions).map(o=>o.value);
-      
-      const plats=sel('filter-platforms'); 
-      if(plats.length) f=f.filter(t=>t.supported_platforms && plats.every(p=>t.supported_platforms.includes(p)));
-      
-      const langs=sel('filter-languages'); 
-      if(langs.length) f=f.filter(t=>t.languages && langs.every(l=>t.languages.includes(l)));
-      
-      const ints=sel('filter-integrations'); 
-      if(ints.length) f=f.filter(t=>t.integrations && ints.every(i=>t.integrations.includes(i)));
-      
-      renderTools(f);
-    }
+      function applyFilters() {
+        let f = tools.slice();
+        const name = document.getElementById('filter-name').value.toLowerCase();
+        if (name)
+          f = f.filter(
+            (t) =>
+              t.name?.toLowerCase().includes(name) ||
+              t.description?.toLowerCase().includes(name)
+          );
 
-    function initializeApp() {
-      populateSelect('filter-category', unique(tools.filter(t => t.category).map(t=>t.category)));
-      populateSelect('filter-license', unique(tools.filter(t => t.license).map(t=>t.license)));
-      populateSelect('filter-platforms', unique(tools.filter(t => t.supported_platforms).flatMap(t=>t.supported_platforms)));
-      populateSelect('filter-languages', unique(tools.filter(t => t.languages).flatMap(t=>t.languages)));
-      populateSelect('filter-integrations', unique(tools.filter(t => t.integrations).flatMap(t=>t.integrations)));
-      renderTools(tools);
-      document.querySelectorAll('#filters input, #filters select').forEach(el=>el.addEventListener('input', applyFilters));
-    }
+        const cat = document.getElementById('filter-category').value;
+        if (cat) f = f.filter((t) => t.category === cat);
 
-    document.addEventListener('DOMContentLoaded', loadToolsData);
-  </script>
-</body>
+        const lic = document.getElementById('filter-license').value;
+        if (lic) f = f.filter((t) => t.license === lic);
+
+        if (document.getElementById('filter-open-source').checked)
+          f = f.filter((t) => t.open_source);
+        if (document.getElementById('filter-free-tier').checked)
+          f = f.filter((t) => t.free);
+
+        const sel = (id) =>
+          Array.from(document.getElementById(id).selectedOptions).map((o) => o.value);
+
+        const plats = sel('filter-platforms');
+        if (plats.length)
+          f = f.filter(
+            (t) =>
+              t.supported_platforms &&
+              plats.every((p) => t.supported_platforms.includes(p))
+          );
+
+        const langs = sel('filter-languages');
+        if (langs.length)
+          f = f.filter(
+            (t) => t.languages && langs.every((l) => t.languages.includes(l))
+          );
+
+        const ints = sel('filter-integrations');
+        if (ints.length)
+          f = f.filter(
+            (t) => t.integrations && ints.every((i) => t.integrations.includes(i))
+          );
+
+        renderTools(f);
+      }
+
+      function initializeApp() {
+        populateSelect(
+          'filter-category',
+          unique(tools.filter((t) => t.category).map((t) => t.category))
+        );
+        populateSelect(
+          'filter-license',
+          unique(tools.filter((t) => t.license).map((t) => t.license))
+        );
+        populateSelect(
+          'filter-platforms',
+          unique(
+            tools
+              .filter((t) => t.supported_platforms)
+              .flatMap((t) => t.supported_platforms)
+          )
+        );
+        populateSelect(
+          'filter-languages',
+          unique(tools.filter((t) => t.languages).flatMap((t) => t.languages))
+        );
+        populateSelect(
+          'filter-integrations',
+          unique(tools.filter((t) => t.integrations).flatMap((t) => t.integrations))
+        );
+        renderTools(tools);
+
+        document.querySelectorAll('#filters input, #filters select').forEach((el) => {
+          el.addEventListener('input', applyFilters);
+          el.addEventListener('change', applyFilters);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', loadToolsData);
+    </script>
+  </body>
 </html>
-
