@@ -1,0 +1,8 @@
+node_modules
+.prettierrc
+.vscode
+clean-tools.py
+consolidate-categories.py
+dedupe.py
+package-lock.json
+package.json
