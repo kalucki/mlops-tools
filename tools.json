@@ -344,7 +344,7 @@
     "category": "Experiment Tracking",
     "description": "Lightweight experiment tracking and model registry SaaS, with a focus on metadata and custom charts.",
     "supported_platforms": ["Cloud", "Linux", "macOS", "Windows"],
-    "languages": ["Python", "R", "JavaScript"],
+    "languages": ["Python", "R", "Javascript"],
     "integrations": ["Keras", "PyTorch", "MLflow", "GitHub"]
   },
   {
@@ -356,7 +356,7 @@
     "category": "Experiment Tracking",
     "description": "Popular platform for tracking and visualizing ML experiments, model artifacts, and hyperparameter optimization.",
     "supported_platforms": ["Cloud", "On-Prem option", "Linux/Windows/macOS"],
-    "languages": ["Python", "R", "JavaScript"],
+    "languages": ["Python", "R", "Javascript"],
     "integrations": ["TensorBoard", "Keras", "PyTorch", "scikit-learn"]
   },
   {
@@ -368,7 +368,7 @@
     "category": "Experiment Tracking",
     "description": "SaaS for experiment tracking, model management, and visualization with collaborative reporting features.",
     "supported_platforms": ["Cloud", "Self-hosted"],
-    "languages": ["Python", "R", "Java", "JavaScript"],
+    "languages": ["Python", "R", "Java", "Javascript"],
     "integrations": ["TensorBoard", "scikit-learn", "XGBoost", "Jupyter"]
   },
   {
@@ -392,7 +392,7 @@
     "category": "Experiment Tracking",
     "description": "Open source tool to record, search, and visualize hundreds of ML experiments with a streamlined UI.",
     "supported_platforms": ["Linux", "macOS", "Windows", "Docker"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["PyTorch Lightning", "Keras", "scikit-learn"]
   },
   {
@@ -692,7 +692,7 @@
     "category": "Model Serving & Deployment",
     "description": "Library for building easy-to-use web UIs for machine learning models, allowing quick model demos and deployments.",
     "supported_platforms": ["Linux", "macOS", "Windows"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["TensorFlow", "PyTorch", "Hugging Face"]
   },
   {
@@ -716,7 +716,7 @@
     "category": "Model Serving & Deployment",
     "description": "Platform for sharing ML models and datasets, with an inference API and free model hosting for community models.",
     "supported_platforms": ["Cloud"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["Transformers", "Gradio", "Streamlit"]
   },
   {
@@ -752,7 +752,7 @@
     "category": "Model Monitoring & Validation",
     "description": "Open source library providing interactive reports and dashboards to analyze data drift, model performance, and fairness.",
     "supported_platforms": ["Linux", "macOS", "Windows"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["Jupyter", "Pandas", "scikit-learn"]
   },
   {
@@ -848,7 +848,7 @@
     "category": "Model Debugging & Visualization",
     "description": "Visualizer for neural network models that supports numerous model formats (ONNX, Keras, TensorFlow, Caffe, etc.).",
     "supported_platforms": ["Linux", "macOS", "Windows", "Web"],
-    "languages": ["JavaScript"],
+    "languages": ["Javascript"],
     "integrations": ["ONNX", "TensorFlow", "PyTorch model files"]
   },
   {
@@ -1088,7 +1088,7 @@
     "category": "Platforms & DevOps",
     "description": "Open-source library for implementing continuous integration & delivery (CI/CD) in ML projects using GitHub Actions or GitLab CI.",
     "supported_platforms": ["GitHub Actions", "GitLab CI"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["DVC", "GitHub", "GitLab", "Jenkins"]
   },
   {
@@ -1124,7 +1124,7 @@
     "category": "Data Labeling & Annotation",
     "description": "Web-based tool for annotating video and images for computer vision, supporting bounding boxes, polygons, and interpolation for video.",
     "supported_platforms": ["Docker"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["COCO format", "Pascal VOC", "TensorFlow Object Detection"]
   },
   {
@@ -1230,7 +1230,7 @@
     "category": "Data Management & Catalog",
     "description": "Federated, open-source data catalog for both big data and small data.",
     "supported_platforms": ["Linux", "Kubernetes"],
-    "languages": ["Scala", "JavaScript"],
+    "languages": ["Scala", "Javascript"],
     "integrations": ["PostgreSQL", "ElasticSearch"]
   },
   {
@@ -1646,7 +1646,7 @@
     "category": "Data Visualization",
     "description": "Easy, fast, open source business intelligence platform for sharing data and analytics.",
     "supported_platforms": ["Linux", "macOS", "Windows"],
-    "languages": ["Clojure", "JavaScript"],
+    "languages": ["Clojure", "Javascript"],
     "integrations": ["SQL databases"]
   },
   {
@@ -1658,7 +1658,7 @@
     "category": "Data Visualization",
     "description": "Open-source platform for querying data sources and visualizing results in dashboards.",
     "supported_platforms": ["Linux", "Docker"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["SQL databases", "NoSQL databases"]
   },
   {
@@ -1682,7 +1682,7 @@
     "category": "Data Visualization",
     "description": "Modern, enterprise-ready business intelligence web application (open source by Apache).",
     "supported_platforms": ["Linux", "Docker"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["SQLAlchemy"]
   },
   {
@@ -2684,7 +2684,7 @@
     "category": "Model Debugging & Visualization",
     "description": "Model-agnostic visual debugging tool from Uber for ML models, to identify issues via partial dependence and performance analysis.",
     "supported_platforms": ["Linux", "macOS", "Windows"],
-    "languages": ["Python", "JavaScript"],
+    "languages": ["Python", "Javascript"],
     "integrations": ["XGBoost", "scikit-learn"]
   },
   {

@@ -57,13 +57,23 @@
           <label for="filter-category"
             ><span class="pixel-icon">📂</span>Category:</label
           >
-          <select multiselect-search="true" id="filter-category">
+          <select 
+            multiselect-search="true" 
+            id="filter-category" 
+            multiple 
+            size="3"
+          >
             <option value="">All</option>
           </select>
         </div>
         <div class="filter-group">
           <label for="filter-license"><span class="pixel-icon">📄</span>License:</label>
-          <select multiselect-search="true" id="filter-license">
+          <select 
+            multiselect-search="true" 
+            id="filter-license" 
+            multiple 
+            size="3"
+          >
             <option value="">All</option>
           </select>
         </div>
@@ -177,38 +187,44 @@
               t.description?.toLowerCase().includes(name)
           );
 
-        const cat = document.getElementById('filter-category').value;
-        if (cat) f = f.filter((t) => t.category === cat);
+        const sel = (id) =>
+          Array.from(document.getElementById(id).selectedOptions)
+            .map((o) => o.value)
+            .filter(v => v !== ''); // Filter out the "All" option
 
-        const lic = document.getElementById('filter-license').value;
-        if (lic) f = f.filter((t) => t.license === lic);
+        // Updated category filter to handle multiple selections
+        const cats = sel('filter-category');
+        if (cats.length)
+          f = f.filter((t) => cats.some(cat => t.category === cat));
+
+        // Updated license filter to handle multiple selections
+        const lics = sel('filter-license');
+        if (lics.length)
+          f = f.filter((t) => lics.some(lic => t.license === lic));
 
         if (document.getElementById('filter-open-source').checked)
           f = f.filter((t) => t.open_source);
         if (document.getElementById('filter-free-tier').checked)
           f = f.filter((t) => t.free);
 
-        const sel = (id) =>
-          Array.from(document.getElementById(id).selectedOptions).map((o) => o.value);
-
         const plats = sel('filter-platforms');
         if (plats.length)
           f = f.filter(
             (t) =>
               t.supported_platforms &&
-              plats.every((p) => t.supported_platforms.includes(p))
+              plats.some((p) => t.supported_platforms.includes(p))
           );
 
         const langs = sel('filter-languages');
         if (langs.length)
           f = f.filter(
-            (t) => t.languages && langs.every((l) => t.languages.includes(l))
+            (t) => t.languages && langs.some((l) => t.languages.includes(l))
           );
 
         const ints = sel('filter-integrations');
         if (ints.length)
           f = f.filter(
-            (t) => t.integrations && ints.every((i) => t.integrations.includes(i))
+            (t) => t.integrations && ints.some((i) => t.integrations.includes(i))
           );
 
         renderTools(f);
@@ -239,6 +255,14 @@
           'filter-integrations',
           unique(tools.filter((t) => t.integrations).flatMap((t) => t.integrations))
         );
+
+        // Reinitialize multiselect dropdowns after populating options
+        document.querySelectorAll('select[multiple]').forEach(select => {
+          if (select.loadOptions) {
+            select.loadOptions();
+          }
+        });
+
         renderTools(tools);
 
         document.querySelectorAll('#filters input, #filters select').forEach((el) => {
