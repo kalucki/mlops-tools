@@ -261,6 +261,9 @@ article.tool {
   font-family: sans-serif;
   width: 100%;
   box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 article.tool:hover {
@@ -300,6 +303,9 @@ article.tool:active h2 a {
 article.tool p {
   margin: 0 0 0.8rem;
   line-height: 1.4;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 article.tool ul {
@@ -313,6 +319,9 @@ article.tool ul li {
   margin-bottom: 0.3rem;
   display: flex;
   align-items: center;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 article.tool ul li .pixel-icon {

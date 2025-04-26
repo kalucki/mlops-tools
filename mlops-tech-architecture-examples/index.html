@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FZ42W10YN3"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-FZ42W10YN3');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Ops Architecture Examples | Common ML Ops Tech Stacks</title>
+    <meta
+      name="description"
+      content="Explore common ML Ops architecture patterns and tech stacks. Learn about different combinations of tools and when to use them."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta
+      property="og:title"
+      content="ML Ops Architecture Examples | Common ML Ops Tech Stacks"
+    />
+    <meta
+      property="og:description"
+      content="Explore common ML Ops architecture patterns and tech stacks. Learn about different combinations of tools and when to use them."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://mlops-tools.com/mlops-tech-architecture-examples" />
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      .stack {
+        background: #fff;
+        padding: 3rem;
+        border: 4px solid #000;
+        box-shadow: 8px 8px 0 #999;
+        border-radius: 4px;
+        margin-bottom: 3rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .stack h2 {
+        margin: 0 0 2rem;
+        font-size: 1.8em;
+        font-family: monospace;
+        color: #ff4081;
+      }
+
+      .stack-tools {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .tool-card {
+        background: #f9f9f9;        ;
+        padding: 1.5rem;
+        border: 2px solid #000;
+        border-radius: 4px;
+      }
+
+      .tool-card h3 {
+        margin: 0 0 1rem;
+        font-size: 1.2em;
+        font-family: monospace;
+      }
+
+      .tool-card a {
+        color: #ff4081;
+        text-decoration: none;
+      }
+
+      .tool-card a:hover {
+        text-decoration: underline;
+      }
+
+      .stack-section {
+        margin: 2.5rem 0;
+      }
+
+      .stack-section h4 {
+        font-family: monospace;
+        margin: 0 0 1.5rem;
+        font-size: 1.4em;
+        color: #333;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.5rem;
+      }
+
+      .stack-section p {
+        margin: 0;
+        line-height: 1.7;
+        font-size: 1.1em;
+      }
+
+      .infrastructure-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background: #f9f9f9;
+        border: 2px solid #eee;
+        border-radius: 4px;
+      }
+
+      .infra-section {
+        padding: 1.5rem;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .infra-section h5 {
+        margin: 0 0 1rem;
+        font-family: monospace;
+        color: #666;
+        font-size: 1.1em;
+      }
+      .cit-link {
+        cursor: pointer;
+      }
+      .cit-link:hover {
+        text-decoration: underline;
+        text-decoration-style: dashed;
+        text-decoration-color: #ff4081;
+      }
+
+      @media (max-width: 768px) {
+        .stack {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+        
+        .infrastructure-details {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .content-wrapper {
+          font-size: 1em;
+        }
+
+        .stack-section h4 {
+          font-size: 1.2em;
+        }
+      }
+
+      .content-wrapper {
+        line-height: 1.7;
+        font-size: 1.1em;
+        color: #2c3e50;
+      }
+
+      .content-wrapper a.cit-link {
+        color: #ff4081;
+        text-decoration: none;
+        border-bottom: 1px dashed #ff4081;
+        padding-bottom: 2px;
+        transition: all 0.2s ease;
+        font-weight: 500;
+      }
+
+      .content-wrapper a.cit-link:hover {
+        background-color: rgba(255, 64, 129, 0.1);
+        border-bottom: 1px solid #ff4081;
+        color: #d81b60;
+      }
+
+      #stacks-list {
+        padding: 2rem;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      ::selection {
+        background: rgba(255, 64, 129, 0.2);
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1
+        class="pixel-border"
+        style="display: flex; flex-direction: column; gap: 10px; max-width: fit-content"
+      >
+        <div style="display: flex; align-items: center">👾 ML Ops Architecture Examples</div>
+        <span style="font-size: 0.7rem; margin: 0 auto">
+          Common Tech Stacks for ML Ops</span
+        >
+      </h1>
+    </header>
+
+    <main id="stacks-list"></main>
+
+    <script>
+      async function loadStacksData() {
+        try {
+          const response = await fetch('../stacks.json');
+          if (!response.ok) {
+            throw new Error('Failed to load stacks data');
+          }
+          const stacks = await response.json();
+          renderStacks(stacks);
+        } catch (error) {
+          console.error('Error loading stacks:', error);
+          document.getElementById('stacks-list').textContent =
+            'Error loading stacks data. Please try again later.';
+        }
+      }
+
+      function renderStacks(stacks) {
+        const container = document.getElementById('stacks-list');
+        
+        stacks.forEach(stack => {
+          const stackElement = document.createElement('article');
+          stackElement.className = 'stack';
+          
+          // Tools section
+          const toolsHtml = stack.tools.map(tool => `
+            <div class="tool-card">
+              <h3>${tool.name}</h3>
+              <a href="${tool.documentation}" target="_blank" rel="noopener">Documentation</a>
+              <div style="margin-top: 0.5rem">
+                <small>
+                  ${tool.open_source ? '✓ Open Source' : '✗ Proprietary'}<br>
+                  ${tool.free ? '✓ Free' : '✗ Paid'}
+                </small>
+              </div>
+            </div>
+          `).join('');
+
+          // Create a temporary container to parse HTML content
+          const tempContainer = document.createElement('div');
+          
+          // Build the HTML structure
+          const contentHtml = `
+            <h2>${stack.name}</h2>
+            <div class="stack-tools">
+              ${toolsHtml}
+            </div>
+            <div class="stack-section">
+              <h4>How They Work Together</h4>
+              <div class="content-wrapper">${stack.synergy}</div>
+            </div>
+            <div class="stack-section">
+              <h4>Good For</h4>
+              <div class="content-wrapper">${stack.good_for}</div>
+            </div>
+            <div class="stack-section">
+              <h4>Not Suitable For</h4>
+              <div class="content-wrapper">${stack.not_suitable_for}</div>
+            </div>
+            <div class="stack-section">
+              <h4>Infrastructure Requirements</h4>
+              <div class="infrastructure-details">
+                <div class="infra-section">
+                  <h5>🖥️ Hardware</h5>
+                  <div class="content-wrapper">${stack.infrastructure.hardware}</div>
+                </div>
+                <div class="infra-section">
+                  <h5>🚀 Deployment</h5>
+                  <div class="content-wrapper">${stack.infrastructure.deployment}</div>
+                </div>
+                <div class="infra-section">
+                  <h5>☁️ Cloud Requirements</h5>
+                  <div class="content-wrapper">${stack.infrastructure.cloud}</div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // Set the HTML content
+          stackElement.innerHTML = contentHtml;
+
+          // Find all citation links and add click event handlers
+          const citationLinks = stackElement.querySelectorAll('.cit-link');
+          citationLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+              e.preventDefault();
+              window.open(link.getAttribute('href'), '_blank');
+            });
+          });
+
+          container.appendChild(stackElement);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', loadStacksData);
+    </script>
+  </body>
+</html>

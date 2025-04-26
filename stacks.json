@@ -1,0 +1,363 @@
+[
+  {
+    "name": "Kubernetes + Kubeflow (Open Source MLOps on K8s)",
+    "tools": [
+      {
+        "name": "Kubernetes",
+        "documentation": "https://kubernetes.io/docs/home/",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Kubernetes_logo.svg/2560px-Kubernetes_logo.svg.png",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Kubeflow",
+        "documentation": "https://www.kubeflow.org/docs/",
+        "logo": "https://static.cdnlogo.com/logos/k/46/kubeflow.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "KServe",
+        "documentation": "https://kserve.github.io/website/",
+        "logo": "https://raw.githubusercontent.com/kserve/artwork/main/color/k-serve-color.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "MLflow",
+        "documentation": "https://mlflow.org/docs/latest/index.html",
+        "logo": "https://www.iconarchive.com/download/i150337/simpleicons-team/simple/mlflow.svg",
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>Runs the entire ML lifecycle on Kubernetes with Kubeflow orchestrating workflows and model serving (via KServe) in a cloud-native way. <a class='cit-link' href='https://ubuntu.com/ai/what-is-kubeflow#:~:text=integrated%20with%20other%20leading%20tools,such%20as%20MLflow' target='_blank'>Kubeflow</a> covers data prep, training, tuning (Katib), and serving, while MLflow integrates for experiment tracking and model registry. This stack provides a powerful, portable platform: Kubernetes handles scaling and resource management, and Kubeflow ties together many open-source ML tools into one cohesive toolkit.</div>",
+    "good_for": "<div>Teams with strong DevOps expertise needing a full-featured open source MLOps platform on <a class='cit-link' href='https://www.montecarlodata.com/blog-ml-orchestration-tools/#:~:text=adoption%20Kubeflow%20Kubernetes,Easy%20Simple%20setup%2C%20great%20UX' target='_blank'>Kubernetes</a>. Ideal when you require on-premises or multi-cloud flexibility and want to leverage containerized workflows at scale. Great for managing complex pipelines (data, training, tuning) in organizations standardizing on Kubernetes.</div>",
+    "not_suitable_for": "<div>Organizations without Kubernetes knowledge or those seeking quick setup – <a class='cit-link' href='https://www.montecarlodata.com/blog-ml-orchestration-tools/#:~:text=Kubeflow%20is%20a%20powerhouse%20if,once%20it%E2%80%99s%20up%20and%20running' target='_blank'>Kubeflow has a steep learning curve and overhead</a>. Not ideal for small projects or beginners due to its complexity. If you don't need the full Kubernetes-based lifecycle or lack resources to maintain a cluster, a simpler managed service or lighter-weight tool might be better.</div>",
+    "infrastructure": {
+      "hardware": "<div>Requires a Kubernetes cluster (can be on-prem or cloud) with sufficient nodes to run training jobs and services. For GPU-intensive training, nodes with GPUs (e.g., NVIDIA Tesla/A100) should be part of the cluster. Typically at least a few powerful servers or VMs; can scale to dozens of nodes for large workloads.</div>",
+      "deployment": "<div>Needs Kubernetes installed and configured. Kubeflow is deployed onto the cluster (often via Kustomize or operators). Persistent storage is required for volumes (e.g., for artifacts and Jupyter notebooks), and a metadata database (e.g., MySQL) is used by Kubeflow Pipelines. Networking and ingress setup is needed for the Kubeflow dashboard. Users should also set up authentication (e.g., Dex or Istio) for multi-user isolation if needed.</div>",
+      "cloud": "<div>Not strictly required to use a public cloud – Kubeflow can run on any Kubernetes (on-premises, cloud-managed like GKE/EKS, or even local MicroK8s). However, using cloud-managed Kubernetes can ease maintenance. Cloud object storage (like S3 or GCS) can be integrated for artifact storage. Managed Kubernetes services are recommended unless you have in-house expertise to manage the cluster. Overall, cloud is optional but often used for dynamic scaling and to utilize managed GPU instances.</div>"
+    }
+  },
+  {
+    "name": "Airflow + MLflow + BentoML (Open-Source Pipeline & Serving)",
+    "tools": [
+      {
+        "name": "Apache Airflow",
+        "documentation": "https://airflow.apache.org/docs/",
+        "logo": "https://www.iconarchive.com/download/i149122/simpleicons-team/simple/apache-airflow.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "MLflow",
+        "documentation": "https://mlflow.org/docs/latest/index.html",
+        "logo": "https://www.iconarchive.com/download/i150337/simpleicons-team/simple/mlflow.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "BentoML",
+        "documentation": "https://docs.bentoml.org/en/latest/",
+        "logo": "https://cdnjs.cloudflare.com/ajax/libs/simple-icons/14.3.0/bentoml.svg",
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>Combines Airflow for orchestrating ML workflows with MLflow for experiment tracking and model registry, and BentoML for packaging and serving models. <a class='cit-link' href='https://medium.com/thefork/a-guide-to-mlops-with-airflow-and-mlflow-e19a82901f88#:~:text=III,to%20orchestrate%20a%20project%20workflow' target='_blank'>Airflow schedules and automates the pipeline steps (from data extraction to model training to batch inference)</a>, while MLflow logs parameters/metrics and stores models. Once a model is chosen, BentoML packages it into a reproducible containerized service for deployment. Together, these tools cover training to deployment: <a class='cit-link' href='https://www.bentoml.com/blog/building-ml-pipelines-with-mlflow-and-bentoml#:~:text=Machine%20learning%20projects%20involve%20many,model%20serving%20and%20production%20deployment' target='_blank'>Airflow ensures reproducible pipelines, MLflow provides traceability of results, and BentoML delivers a consistent model serving solution</a>.</div>",
+    "good_for": "<div>Teams that already use Airflow for data engineering and want to extend it to ML. Suitable when experiment tracking and reproducibility are important (via MLflow), and when you need a flexible way to deploy models as APIs without vendor lock-in. This stack shines for moderate-scale projects where a fully cloud-native platform is not required, and you prefer open source components that integrate well.</div>",
+    "not_suitable_for": "<div>Situations where maintaining multiple services is impractical – using Airflow, MLflow, and a model server means more overhead compared to unified platforms. <a class='cit-link' href='https://www.montecarlodata.com/blog-ml-orchestration-tools/#:~:text=Airflow%20is%20the%20veteran%20in,relied%20on%20it%20for%20years' target='_blank'>Not ideal for very small teams or simple workflows (the setup can be \"old-school\" and heavy)</a>. Also, real-time low-latency requirements might need specialized serving infrastructure beyond BentoML's default (e.g., if ultra-high throughput or global scaling is needed, a more cloud-native serving solution or managed service could be easier).</div>",
+    "infrastructure": {
+      "hardware": "<div>Airflow can run on a single server (for the scheduler and web UI) plus workers; a multi-core VM is often sufficient initially. MLflow tracking server can run on a small VM (or even the same machine) and uses a backing store (filesystem or SQL database) for metadata. BentoML model servers will need machines (or containers) with enough CPU/GPU to handle inference load. Physical hardware can range from one VM for all components (small-scale) to separate machines for Airflow, MLflow, and one or more for model serving. Additional storage: a database (PostgreSQL/MySQL) for Airflow metadata, and artifact storage (e.g., S3 or local NAS) for MLflow.</div>",
+      "deployment": "<div>You need to install and manage each service. Airflow requires setting up its scheduler, web server, and a metadata database; it can be deployed via Docker or system packages. MLflow can be launched via a simple CLI (pointing it to a tracking database and an artifact store). BentoML model services are containerized (BentoML can build a Docker image for the model) – you will deploy these containers (via Docker, Kubernetes, or even as a standalone process). For orchestration, a CI/CD system can trigger Airflow DAG runs or you can rely on Airflow's scheduling. Integration wise, Airflow DAG tasks trigger model training code (which logs to MLflow), and after training, a task can register the model and call BentoML to build a service. You'll also need to configure networking so that the BentoML API (model endpoint) is accessible to clients (could be internal or external).</div>",
+      "cloud": "<div>Optional. This stack can be run on-premises or on cloud VMs. Managed cloud offerings exist (e.g., <a class='cit-link' href='https://medium.com/thefork/a-guide-to-mlops-with-airflow-and-mlflow-e19a82901f88#:~:text=triggered%20by%20the%20daily%20Airflow,MLflow%20to%20compute%20new%20predictions' target='_blank'>Amazon MWAA for Airflow, or cloud storage for MLflow artifacts</a>), but the core tools are self-hosted. Cloud is recommended for scalability: for example, using AWS S3 for MLflow artifact storage, or deploying BentoML services on Kubernetes in the cloud for auto-scaling. There's no inherent dependency on a specific cloud provider – you can mix and match (e.g., run Airflow on an EC2 VM, use Amazon RDS for Airflow/MLflow databases, and deploy model containers to AWS ECS or EKS). In summary, cloud use can simplify provisioning (and allow dynamic scaling of Airflow workers or model servers), but it's not strictly required.</div>"
+    }
+  },
+  {
+    "name": "Git-Based CI MLOps (DVC + CML + MLEM)",
+    "tools": [
+      {
+        "name": "DVC (Data Version Control)",
+        "documentation": "https://dvc.org/doc",
+        "logo": "https://worldvectorlogo.com/download/dvc.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "CML (Continuous Machine Learning)",
+        "documentation": "https://cml.dev",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "MLEM",
+        "documentation": "https://mlem.ai/doc",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>This stack uses a Git-centric approach to MLOps. <a class='cit-link' href='https://dvc.org/doc/use-cases/ci-cd-for-machine-learning#:~:text=Low%20friction%3A%20Our%20sister%20project,and%20require%20no%20external%20services' target='_blank'>DVC</a> handles dataset and model versioning and pipeline reproducibility by integrating with Git (datasets and models are tracked as large files with DVC). <a class='cit-link' href='https://dvc.org/doc/use-cases/ci-cd-for-machine-learning#:~:text=match%20at%20L315%20on%20new,model%2C%20and%20then%20deploy%20an' target='_blank'>CML (from the makers of DVC)</a> extends continuous integration (CI) systems (like GitHub Actions/GitLab CI) to automatically retrain and evaluate models on every code or data change, enabling CI/CD for ML. <a class='cit-link' href='https://mlem.ai/#:~:text=,want' target='_blank'>MLEM</a> complements these by packaging and deploying models: it saves trained models along with environment metadata and can deploy them (to Docker, Kubernetes, etc.) with a single command. Together, they enable DataOps/ModelOps entirely via Git workflows: pushing a Git commit can trigger CML to provision compute and run a DVC pipeline, then MLEM saves the new model for deployment – all orchestrated through version control.</div>",
+    "good_for": "<div>Teams that favor Git-centric workflows (e.g., already practicing GitOps) and want minimal new infrastructure. Ideal for small to mid-size projects where developers are comfortable with DevOps tools. <a class='cit-link' href='https://dvc.org/doc/use-cases/ci-cd-for-machine-learning#:~:text=match%20at%20L315%20on%20new,model%2C%20and%20then%20deploy%20an' target='_blank'>If you want to leverage existing CI infrastructure for ML (reusing GitHub/GitLab runners to train models)</a>, this stack is very appealing. It's fully open-source and lightweight – good for organizations that need transparency and customization over their ML pipeline, and for scenarios where experiment tracking and model registry can be handled in a Git-native way (as opposed to using a separate platform).</div>",
+    "not_suitable_for": "<div>Large-scale or real-time ML systems where a more robust orchestrator is needed – for example, handling very complex pipelines or massive data might outgrow what Git-based pipelines can comfortably manage. Not ideal if your team is not using Git or CI heavily – this approach works best when code and data versioning are already central. Also, if you require a feature-rich model monitoring/serving solution, you may need to integrate additional tools (since deployment with MLEM is flexible but not a managed service). In short, if you prefer a point-and-click ML platform or don't have DevOps expertise, this Git-centered stack might be challenging.</div>",
+    "infrastructure": {
+      "hardware": "<div>No dedicated server for an orchestration service is needed – the heavy lifting happens on CI runners. For example, on GitHub Actions, training jobs run on ephemeral VMs provisioned by GitHub (or self-hosted runners). CML can automatically launch cloud instances (AWS, Azure, etc.) with required resources (like GPUs) for jobs. So hardware can be as needed per run: e.g., a job can spin up a GPU VM, run training, then shut it down. Persistent storage: you need a remote storage for DVC to store datasets/models (e.g., an S3 bucket, Azure Blob, Google Drive, etc.), and Git for versioning metadata. MLEM will use Docker or cloud services when deploying models (so infrastructure for hosting the model (e.g., a Kubernetes cluster or cloud function) might be needed depending on deployment target).</div>",
+      "deployment": "<div>Everything is driven by Git and CI pipelines. You need a Git repository (e.g., on GitHub/GitLab) and set up DVC with a remote storage (for data/model files). DVC and CML require installing their CLI tools (often, a CI pipeline will pip install DVC and CML at runtime). The CI pipelines (YAML configs) need to be written to define the steps: checkout code, pull data via DVC, run training, push results. <a class='cit-link' href='https://dvc.org/doc/use-cases/ci-cd-for-machine-learning#:~:text=match%20at%20L315%20on%20new,model%2C%20and%20then%20deploy%20an' target='_blank'>CML runners can be used to provision cloud instances within these workflows</a>. No separate web UI (besides Git). Model deployment with MLEM integrates with your infrastructure of choice: for instance, running `mlem deploy` can create a Docker image or deploy to AWS SageMaker – you must have those services available. Essentially, deployment requires access to a container registry and whatever runtime (k8s cluster, etc.) to actually serve the model. Everything is done in code (as configuration in the repo) and executed via CI.</div>",
+      "cloud": "<div>Often used with cloud-based CI (like GitHub Actions) – so the training compute comes from the cloud. DVC remotes are often cloud storage (S3, GCS, etc.) to easily share large files. <a class='cit-link' href='https://dvc.org/doc/use-cases/ci-cd-for-machine-learning#:~:text=match%20at%20L315%20on%20new,model%2C%20and%20then%20deploy%20an' target='_blank'>CML can provision cloud VMs (AWS, Azure, GCP) on the fly for training jobs</a>, which is a cloud-centric way to get scalable compute without maintaining servers. You can run the whole setup on-prem (self-hosted Git server and runners, and on-prem storage), but using cloud services for storage and on-demand compute greatly simplifies operations. There are no managed services required – it runs on basic cloud primitives (VMs, storage, containers). This makes multi-cloud or hybrid deployment feasible, but the simplest route is to use a single cloud for storage and compute to minimize configuration.</div>"
+    }
+  },
+  {
+    "name": "TensorFlow Extended Pipeline (TFX + TensorFlow Serving)",
+    "tools": [
+      {
+        "name": "TensorFlow Extended (TFX)",
+        "documentation": "https://www.tensorflow.org/tfx",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Apache Beam",
+        "documentation": "https://beam.apache.org/documentation/",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/6/64/Apache_Beam_logo.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Apache Airflow",
+        "documentation": "https://airflow.apache.org/docs/",
+        "logo": "https://www.iconarchive.com/download/i149122/simpleicons-team/simple/apache-airflow.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "TensorFlow Serving",
+        "documentation": "https://www.tensorflow.org/tfx/guide/serving",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>Google's TFX provides a coherent pipeline of components for data ingestion, validation, training, and validation, all built around TensorFlow. <a class='cit-link' href='https://www.tensorflow.org/tfx/guide/understanding_tfx_pipelines#:~:text=A%20TFX%20pipeline%20is%20a,component%20instances%20and%20input%20parameters' target='_blank'>It works with orchestration engines</a> like Apache Beam for scalable data processing and either Airflow or Kubeflow Pipelines to manage workflow execution. Beam enables distributed processing in steps like data transformation and model analysis, which can run on engines like Dataflow for scale. <a class='cit-link' href='https://www.tensorflow.org/tfx/guide/serving#:~:text=TensorFlow%20Serving%20is%20a%20flexible%2C,models%2C%20designed%20for%20production%20environments' target='_blank'>TensorFlow Serving integrates at the end to deploy the trained TensorFlow model</a> as a high-performance prediction service. This stack is designed end-to-end: TFX standardizes the pipeline with components (e.g., ExampleGen, Trainer, Evaluator, Pusher), Beam powers those components to handle large data, and if the model passes validation the Pusher can send it to TensorFlow Serving for production. <a class='cit-link' href='https://stackoverflow.com/questions/73512135/why-we-need-tfx-if-we-have-airflow-for-orchestration#:~:text=Overflow%20stackoverflow,Apache%20Beam%20and%20Kubeflow' target='_blank'>The tools are built to work together – TFX produces SavedModels that TensorFlow Serving can load immediately</a>, and TFX's pipeline can be executed on GCP's managed services (like Dataflow and Vertex Pipelines) without much changes.</div>",
+    "good_for": "<div>Organizations heavily using TensorFlow and needing a production-grade pipeline. <a class='cit-link' href='https://cloud.google.com/architecture/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build#:~:text=Architecture%20for%20MLOps%20using%20TensorFlow,performance%20ML%20tasks' target='_blank'>It's excellent for robust, repeatable pipelines in enterprise settings</a>, especially when data is large or on Google Cloud (Beam + Dataflow). If you require strict data validation, schema management, and want to automate model validation before deployment (to avoid pushing bad models), this stack shines – TFX has built-in components for these. It's a good choice when your use-case aligns with supervised learning on structured data and you plan to serve via TensorFlow Serving (for instance, online prediction with TF models).</div>",
+    "not_suitable_for": "<div>Teams not using TensorFlow – TFX is fairly TensorFlow-centric (PyTorch can be used in custom components but it's not the focus). If you don't need the heavy data processing or Google Cloud integration, TFX might be overkill. It also has a learning curve and can be complex to set up outside GCP. For simpler projects or non-TF models, a lighter-weight pipeline or different stack would be easier. Also, TFX's tight integration with Google's ecosystem means on other cloud platforms you might have to do more manual setup (though it's possible).</div>",
+    "infrastructure": {
+      "hardware": "<div>All managed by Google. Training jobs run on Google's AI Platform infrastructure – you can choose CPUs, GPUs, or TPUs and Google will provision the compute (either as ephemeral VMs or using GKE behind the scenes). BigQuery is serverless – it manages the hardware for queries (though you might allocate slots). GCS is also serverless storage. Vertex endpoints for deployed models run on managed VMs in Google's data centers; you specify scaling parameters but not the actual machines. Pipelines run on a managed Kubeflow Pipelines instance (Google manages the GKE cluster for it when using Vertex Pipelines). So you do not handle servers directly, just configurations.</div>",
+      "deployment": "<div>You use the Google Cloud Console or SDK to create datasets, train models (either by uploading data and using AutoML or by submitting a training application package to Vertex Training). Once a model artifact is in Vertex AI, you can deploy it to an endpoint with a few clicks or an API call – GCP will then allocate resources and give you an endpoint URL. BigQuery data can be pipelined in via scheduled queries or Dataflow jobs. To automate, you might use Vertex AI Pipelines which are defined in Python (using TFX or KFP SDK) and then executed on the managed environment. Essentially, deployment and workflow steps are mostly configuration on GCP – little to no management of VMs or containers on your part. Everything ties in with Google's IAM for security (so controlling who can access models or run pipelines is uniform).</div>",
+      "cloud": "<div>This stack is entirely Google Cloud. Vertex AI does not run elsewhere. It leverages many GCP services (Cloud Storage, BigQuery, Dataflow, etc.), so it works best when all your data and compute are in GCP to minimize latency and egress fees. Many companies go all-in on GCP for data (eg. using BigQuery as a central warehouse) and then Vertex AI is a natural extension to add ML capabilities to that data. If you have a multi-cloud strategy, you'd use a different stack. But if GCP is your main environment, <a class='cit-link' href='https://cloud.google.com/blog/products/ai-machine-learning/vodafones-ml-platform-built-on-vertex-ai#:~:text=Vodafone's%20ML%20platform%2C%20built%20on,tooling%20within%20a%20unified%20platform' target='_blank'>Vertex AI provides one of the most integrated experiences on that cloud</a>. In summary, running this stack means committing to GCP as your platform for data and AI.</div>"
+    }
+  },
+  {
+    "name": "Ray AI Runtime (Distributed Training & Serving + MLflow)",
+    "tools": [
+      {
+        "name": "Ray",
+        "documentation": "https://docs.ray.io/en/latest/",
+        "logo": "https://raw.githubusercontent.com/ray-project/logos/master/ray_logo.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "MLflow",
+        "documentation": "https://mlflow.org/docs/latest/index.html",
+        "logo": "https://www.iconarchive.com/download/i150337/simpleicons-team/simple/mlflow.svg",
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>Ray is a distributed computing framework that can scale Python ML code from a single machine to a cluster. In this stack, <a class='cit-link' href='https://medium.com/distributed-computing-with-ray/ray-mlflow-taking-distributed-machine-learning-applications-to-production-103f5505cb88#:~:text=Ray%20Tune%20scales%20Hyperparameter%20Tuning' target='_blank'>Ray is used to parallelize hyper-parameter tuning (Ray Tune)</a>, distributed model training, and to serve models with high throughput (Ray Serve). MLflow complements Ray by tracking experiments and models in this distributed setting. Ray Tune integrates with MLflow so that each trial's parameters and metrics are logged automatically, and Ray Serve can load models from MLflow's registry for deployment.</div>",
+    "good_for": "<div>Large-scale experiments and deployments where you need to utilize distributed resources. If you have to tune or train models that would take too long on one machine, Ray makes it straightforward to scale out (for example, running a hyperparam search across many nodes). It's also great when you want a unified system for both batch and online inference – Ray can do model training, then seamlessly switch to serving that model with low latency via Ray Serve. Using MLflow means even with all this parallelism, you maintain a single source of truth for what was tried and which model is current. This stack is good for sophisticated ML teams (e.g., engaging in deep learning or reinforcement learning) that need fine-grained control and aren't afraid to manage a Ray cluster.</div>",
+    "not_suitable_for": "<div>Small projects that don't need distribution – the overhead of Ray isn't worth it if your training can be done on one machine. Also, if you prefer managed services and minimal ops, this stack might be too hands-on (though Anyscale provides a managed Ray, Ray itself is self-hosted). If experiment tracking isn't a priority or you already use a different tracking system, introducing MLflow might be unnecessary. In short, for simple pipelines or strictly cloud-managed scenarios (like using AWS Sagemaker), this open-source combination might be more complex than needed.</div>",
+    "infrastructure": {
+      "hardware": "<div>Requires a cluster for Ray (at least one head node and one or more worker nodes). These can be physical or cloud VMs with network connectivity. For heavy deep learning, you'd include GPU nodes. Ray can also run on Kubernetes via the Ray Operator. Each node should have enough RAM/CPU to handle the tasks (Ray will distribute as needed). The cluster size can scale from 1 machine to dozens – Ray's scheduler handles resource allocation. In addition, MLflow's tracking server can be run on a small VM or container (with a backing store like an SQL database and blob storage for artifacts).</div>",
+      "deployment": "<div>You need to set up a Ray cluster (either manually on VMs or using a cloud deployment script). This could be an autoscaling cluster on AWS (Ray provides templates for AWS/GCP). MLflow tracking server should be hosted somewhere accessible to all Ray workers (so they can log results) – possibly on the head node or a separate service. The Ray cluster needs networking set so that the head and workers communicate (Ray uses ports for its control plane). For serving, you'd deploy Ray Serve on the cluster and point a load balancer or ingress to it. Essentially, you will be managing a distributed system (starting/stopping Ray nodes). Integration wise, your training script will use Ray's APIs (e.g., @ray.remote decorators, Ray Tune's API) and inside those functions log to MLflow. Ensure MLflow credentials or URI is set in environment so all Ray processes log to the right place.</div>",
+      "cloud": "<div>Ray is cloud-agnostic but often run on cloud VMs. You might use an autoscaling Kubernetes or a Ray cluster on AWS EC2. Using cloud is recommended because Ray can then easily acquire more instances; indeed, Ray has a cluster launcher that can dynamically add nodes on AWS/Azure/GCP. MLflow can use cloud storage (S3, etc.) for artifact storage – highly recommended for durability. There's no fully managed Ray service from cloud providers (aside from Anyscale), so you either manage it yourself on cloud infrastructure or use Anyscale. Cloud also provides the benefit of being able to choose powerful machines (like GPU instances) when needed and shut them down when done (Ray can do this automatically). So, while not strictly required, using a cloud environment is the typical scenario for this stack to leverage elasticity.</div>"
+    }
+  },
+  {
+    "name": "LLM Retrieval-Augmented Generation (LangChain + Vector DB)",
+    "tools": [
+      {
+        "name": "LangChain",
+        "documentation": "https://python.langchain.com/en/latest/",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Weaviate (vector database)",
+        "documentation": "https://weaviate.io/developers/weaviate",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Hugging Face Transformers",
+        "documentation": "https://huggingface.co/docs/transformers/index",
+        "logo": "https://huggingface.co/front/assets/huggingface_logo.svg",
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>This stack is geared toward building applications with Large Language Models that can ground their answers in private data (also known as Retrieval-Augmented Generation). LangChain provides the framework to chain LLM calls with other tools – for example, it orchestrates retrieving relevant documents and then feeding them into an LLM as context. <a class='cit-link' href='https://python.langchain.com/docs/integrations/vectorstores/weaviate/#:~:text=%3E%20Weaviate%20is%20an%20open,into%20billions%20of%20data%20objects' target='_blank'>Weaviate is an open-source vector database that stores embeddings of documents and can quickly do similarity search to fetch relevant chunks given a query</a>. Hugging Face Transformers comes into play either to generate embeddings (using models like SentenceTransformers) or to host an open-source LLM (like GPT-2 or Llama 2) if you prefer not to call an external API. Together, these allow you to ask an LLM questions about your data: LangChain will use a Transformer model to embed the query, Weaviate will find relevant text chunks, and LangChain then feeds those to an LLM (which could be via Hugging Face) to get a final answer. <a class='cit-link' href='https://adasci.org/build-a-question-answering-pipeline-with-weaviate-vector-store-and-langchain/#:~:text=Features%20of%20LangChain' target='_blank'>The tools are chosen to integrate: LangChain has built-in support for Weaviate and HuggingFace models</a>, making it relatively straightforward to set up a Q&A or chatbot over your documents.</div>",
+    "good_for": "<div>Building intelligent chatbots, assistants, or search engines that use proprietary or specific data. If you have a lot of unstructured text (docs, wikis, PDFs) and want to enable natural language querying of that data, this stack is ideal. It's fully open source, so it's good for those who need to keep data in-house (no external API calls). It's also quite modular/flexible – you can swap Weaviate with another vector DB (like Milvus or Chroma) or the model with an OpenAI API, but the stack remains similar. This is great for rapid prototyping in the LLM era – LangChain especially is designed to let developers piece together LLM workflows quickly.</div>",
+    "not_suitable_for": "<div>Cases where you don't actually need a language model. If your problem is better solved with keyword search or a database query, adding an LLM can be unnecessary complexity. Also, maintaining a vector database of large documents can be resource-intensive; for very small projects, simpler solutions (like just using an embedding library and in-memory search) might suffice. Additionally, if your use-case requires strict reproducibility or stable outputs (LLMs are stochastic), this dynamic approach might be less ideal. Finally, organizations not comfortable managing these components (especially the vector DB, which needs memory and tuning) might lean toward fully managed SaaS offerings instead of this DIY stack.</div>",
+    "infrastructure": {
+      "hardware": "<div>Weaviate runs as a service (can be containerized); it will require memory proportional to your vector index size (for example, a few GB of RAM to hold several hundred thousand embeddings). If using a local HuggingFace model for embeddings or LLM, you'll need sufficient CPU/GPU for those – e.g., a GPU if using a large transformer for embedding or a smaller model for generation. Many RAG setups use a smaller model for embedding (which can run on CPU) and maybe an API for the actual LLM (to avoid hosting a huge model). But if fully self-hosting, a machine with at least one GPU (for a moderately sized model like Llama-2-7B) would be necessary. LangChain itself is just code running within your app, no special server.</div>",
+      "deployment": "<div>You'll deploy Weaviate (or your vector DB of choice) – this could be via Docker on a VM or a Kubernetes pod. It typically also uses a disk or persistent volume to store the index. Your application (which uses LangChain) can be a server (for example, a FastAPI app) that handles user queries: when a query comes, the app uses LangChain to call Weaviate and the model. Hugging Face Transformers can be used directly in the app to load a model or you might run a model server. For instance, you might run a local API using HuggingFace's `transformers` pipeline or the `InferenceEndpoint`. Ensure networking allows your app to talk to the Weaviate instance. You also need to periodically update the vector index when data changes (LangChain can help, but it's a batch process you schedule). Overall, you manage three things: the vector DB service, potentially an ML model service (if not using an external API), and the application logic.</div>",
+      "cloud": "<div>Often these apps run partly on cloud: e.g., host Weaviate using Weaviate Cloud Service or on an EC2 VM, and possibly use a managed HuggingFace model via API. You could also containerize everything and run on a cloud Kubernetes. The stack itself doesn't require specific cloud services – but using cloud GPUs for model inference, and cloud storage for data is common. Because it's open source, you have flexibility: for a smaller project, you might even run all components on a single cloud VM. For production with scale, you might separate them (e.g., a dedicated VM or cluster for Weaviate to scale vector searches, and maybe use a service like AWS SageMaker or an open-source server for hosting the LLM). In summary, cloud is recommended for scalability (especially for provisioning GPUs on demand), but if needed this stack can run on-prem too (with adequate hardware).</div>"
+    }
+  },
+  {
+    "name": "LLM Fine-Tuning Stack (Hugging Face Transformers + DeepSpeed)",
+    "tools": [
+      {
+        "name": "Hugging Face Transformers",
+        "documentation": "https://huggingface.co/docs/transformers/index",
+        "logo": "https://huggingface.co/front/assets/huggingface_logo.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Hugging Face Datasets",
+        "documentation": "https://huggingface.co/docs/datasets/index",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "DeepSpeed",
+        "documentation": "https://www.deepspeed.ai/",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "MLflow",
+        "documentation": "https://mlflow.org/docs/latest/index.html",
+        "logo": "https://www.iconarchive.com/download/i150337/simpleicons-team/simple/mlflow.svg",
+        "open_source": true,
+        "free": true
+      }
+    ],
+    "synergy": "<div>This open-source stack is tailored for training and fine-tuning large language models. Hugging Face Transformers provides the model architectures and training APIs for state-of-the-art LLMs, and Hugging Face Datasets simplifies loading and preprocessing large-scale text datasets. <a class='cit-link' href='https://huggingface.co/docs/peft/main/en/accelerate/deepspeed#:~:text=DeepSpeed' target='_blank'>DeepSpeed (from Microsoft) is an optimization library that allows fine-tuning models with billions of parameters by sharding memory across GPUs and optimizing throughput</a>. MLflow is included to track experiments (hyperparameters, training metrics) and register the resulting model versions. When used together, you might use Transformers Trainer API with DeepSpeed enabled (to leverage ZeRO for memory efficiency), iterate through datasets streaming from Hugging Face Datasets, and log metrics/loss curves to MLflow for each run. <a class='cit-link' href='https://databricks.com/blog/fine-tuning-large-language-models-hugging-face-and-deepspeed#:~:text=what%20tools%20like%20Hugging%20Face,Of%20particular%20interest%20is' target='_blank'>This combination has been demonstrated, e.g., fine-tuning 11B+ parameter models with DeepSpeed and logging results</a>.</div>",
+    "good_for": "<div>Organizations or researchers developing their own large-scale language models or customizing open-source LLMs (like BLOOM, LLaMA, GPT-J) with domain-specific data. If you need to experiment with different fine-tuning hyperparameters on huge models, this stack is ideal: <a class='cit-link' href='https://huggingface.co/docs/peft/main/en/accelerate/deepspeed#:~:text=DeepSpeed%20is%20a%20library%20designed,leveraging%20CPU%20resources%20during%20optimization' target='_blank'>DeepSpeed dramatically lowers the hardware barrier</a> and Transformers + Datasets provide a rich ecosystem for model and data handling. It's also good for implementing advanced training tricks (like curriculum learning or RLHF) because you have full control. Use this if using cloud APIs (like OpenAI) is not possible (due to data compliance or cost) and you have access to GPU hardware to train your own models.</div>",
+    "not_suitable_for": "<div>Those without access to powerful hardware (at least a few high-memory GPUs) – even with DeepSpeed, fine-tuning large models is resource-intensive. If your model sizes are small (tens or hundreds of millions of parameters), you might not need DeepSpeed at all and a simpler training loop could suffice. Additionally, if you prefer a fully managed training service (like Azure ML or SageMaker) this stack might duplicate capabilities; managed solutions can run HF fine-tuning jobs with tracking as well. It's also quite specific to NLP/Large Language Models – if you're doing computer vision or other modalities, you might use a different library (though Transformers is expanding to other domains).</div>",
+    "infrastructure": {
+      "hardware": "<div>Multiple GPUs are strongly recommended. For example, to fine-tune a 6B parameter model you might use 4 A100 GPUs; for a 13B model, 8 A100s – <a class='cit-link' href='https://huggingface.co/docs/peft/main/en/accelerate/deepspeed#:~:text=DeepSpeed%20is%20a%20library%20designed,leveraging%20CPU%20resources%20during%20optimization' target='_blank'>DeepSpeed</a> will partition the model across them. DeepSpeed also can offload to CPU/RAM or NVMe, so having high-speed SSDs and large RAM can augment limited GPU memory (though training will be slower). Typically, a machine with 4–8 GPUs (each with 16–40 GB memory) or a cluster of smaller GPU machines networked together is used. If on a cluster, high interconnect bandwidth (InfiniBand/100 Gbit Ethernet) is important for performance due to gradient synchronization.</div>",
+      "deployment": "<div>You'll run training jobs either on-prem GPU servers or cloud VM instances (or a Kubernetes cluster with GPU nodes). Setup involves installing PyTorch, Transformers, DeepSpeed, etc. If using MLflow, you'll run an MLflow tracking server accessible by all nodes (or use the built-in file store if running single-node for testing). You might use DeepSpeed's launch utility to start a distributed training job. Your code (a Python script) will use Transformers Trainer with a DeepSpeed config (JSON) that tells it how to partition the model. Datasets can stream from the HuggingFace Hub (ensure internet access or mirror data locally). During training, metrics are logged to MLflow – so environment variables or MLflow client code should point to the tracking server.</div>",
+      "cloud": "<div>Often done on cloud due to the need for expensive GPU instances for a limited time. One might use Azure or AWS spot instances with DeepSpeed to save cost (DeepSpeed can help tolerate spot interruptions by checkpointing). Using cloud storage (S3, GS) for datasets and for storing model checkpoints is convenient, especially if you use multiple machines. DeepSpeed doesn't require any specific cloud service – it runs on raw VMs or containers. MLflow could be hosted on a small cloud instance or use a managed MLflow (Databricks or MLflow on AWS). <a class='cit-link' href='https://databricks.com/blog/fine-tuning-large-language-models-hugging-face-and-deepspeed#:~:text=One%20modern%20GPU%20easily%20handles,It's%20advantageous%20to%20use%20a' target='_blank'>Cloud is recommended unless you have on-prem GPU clusters</a>, simply because of the flexibility to allocate many GPUs when needed and release them after.</div>"
+    }
+  },
+  {
+    "name": "Databricks Lakehouse Platform (Spark + MLflow + Delta Lake)",
+    "tools": [
+      {
+        "name": "Apache Spark",
+        "documentation": "https://spark.apache.org/docs/latest/",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Delta Lake",
+        "documentation": "https://docs.delta.io/latest/index.html",
+        "logo": null,
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "MLflow",
+        "documentation": "https://mlflow.org/docs/latest/index.html",
+        "logo": "https://www.iconarchive.com/download/i150337/simpleicons-team/simple/mlflow.svg",
+        "open_source": true,
+        "free": true
+      },
+      {
+        "name": "Databricks (Managed Service)",
+        "documentation": "https://docs.databricks.com/",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png",
+        "open_source": false,
+        "free": false
+      }
+    ],
+    "synergy": "<div><a class='cit-link' href='https://www.devoteam.com/expert-view/databricks-lakehouse-your-data-unified/#:~:text=Databricks%20Lakehouse%3A%20Your%20Data%2C%20Unified,lifecycle%E2%80%94from%20experimentation%20to%20production' target='_blank'>Databricks provides a unified data and AI platform</a> built around Apache Spark big data processing, Delta Lake for reliable data lakes, and MLflow for experiment tracking – all tightly integrated. The managed Databricks service ties these components together: you can use Spark to process and feature-engineer massive datasets, then train models either with Spark MLlib or any ML framework on Databricks clusters, with MLflow automatically logging results. <a class='cit-link' href='https://www.devoteam.com/expert-view/databricks-lakehouse-your-data-unified/#:~:text=Databricks%20Lakehouse%3A%20Your%20Data%2C%20Unified,lifecycle%E2%80%94from%20experimentation%20to%20production' target='_blank'>This stack is an end-to-end pipeline on one platform</a>: data engineers and data scientists collaborate on the same environment; once a model is ready, Databricks can also host it.</div>",
+    "good_for": "<div>Organizations dealing with large-scale data (terabytes of data that need Spark for processing) and those who want a single platform for data engineering and machine learning. It's very well-suited for teams already using Databricks for ETL who want to add ML – the learning curve is low since MLflow and Spark are built-in. Also a strong choice when multiple personas (data engineers, scientists) need to work together – the notebook-based collaborative environment is a plus. In scenarios where data is constantly updated (<a class='cit-link' href='https://www.devoteam.com/expert-view/databricks-lakehouse-your-data-unified/#:~:text=Databricks%20Lakehouse%3A%20Your%20Data%2C%20Unified,lifecycle%E2%80%94from%20experimentation%20to%20production' target='_blank'>Delta Lake shines with streaming data</a>) and models need retraining, this unified approach ensures consistency between data and models.</div>",
+    "not_suitable_for": "<div>Small projects that don't require Spark – Databricks can be overkill if your data fits in pandas. Also, being a proprietary platform, it might not suit organizations avoiding vendor lock-in or the cost model of Databricks. If you purely need model serving without big data aspects, a lighter weight MLOps tool might suffice. Additionally, strict open-source purists might not prefer this since the secret sauce (the Databricks platform itself) is not open source (though core components like Spark, Delta, MLflow are).</div>",
+    "infrastructure": {
+      "hardware": "<div>Databricks is usually provided as a managed service on a cloud (AWS, Azure, GCP) – so hardware provisioning is abstracted. Under the hood, it uses clusters of VMs (with autoscaling) for Spark jobs. If self-hosting (Databricks has on-prem via their Lakehouse Platform), you'd need a Kubernetes or VM cluster to run the control plane and Spark workers. Expect to use powerful VMs (with lots of RAM and possibly GPUs for deep learning jobs). Typically, a cluster might have dozens of cores and hundreds of GB of RAM to handle big data in memory.</div>",
+      "deployment": "<div>On Databricks SaaS, you simply create clusters via their UI or API. Jobs (for ETL or training) are submitted in notebooks or scripts. MLflow tracking server is integrated (no extra setup). Model deployment can be done via Databricks MLflow Model Serving (which spins up a cluster with your model behind a REST endpoint) or exporting the model (e.g., as a Spark UDF or via MLflow to other serving platforms). If self-managed, you need to deploy the Databricks workspace (which is a complex orchestration of services) – typically most use the hosted version.</div>",
+      "cloud": "<div>Strongly tied to cloud – Databricks is natively a cloud service. It leverages cloud storage (for Delta and logs), cloud data warehouses (it can integrate with things like AWS Redshift or Snowflake if needed), and runs on cloud compute. It's available on all three major clouds; users typically choose based on their existing cloud vendor. The platform is optimized for cloud scale and managed in the cloud, which reduces ops burden. While on-prem is possible (there's a Databricks On-Prem edition for select clients), the majority use-case is cloud.</div>"
+    }
+  },
+  {
+    "name": "AWS SageMaker (Managed ML-as-a-Service)",
+    "tools": [
+      {
+        "name": "Amazon SageMaker",
+        "documentation": "https://docs.aws.amazon.com/sagemaker/",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/2/20/Amazon_Web_Services_Logo.svg",
+        "open_source": false,
+        "free": false
+      },
+      {
+        "name": "Amazon S3",
+        "documentation": "https://docs.aws.amazon.com/s3/",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/0/05/Amazon_S3_logo.svg",
+        "open_source": false,
+        "free": false
+      },
+      {
+        "name": "AWS Step Functions",
+        "documentation": "https://docs.aws.amazon.com/step-functions/",
+        "logo": null,
+        "open_source": false,
+        "free": false
+      }
+    ],
+    "synergy": "<div><a class='cit-link' href='https://dev.to/aws-builders/a-brief-guide-to-aws-sagemaker-services-3lkm#:~:text=,aws%20%20%2016' target='_blank'>SageMaker</a> is a fully managed service that covers the entire ML workflow: it provides hosted Jupyter notebooks for development, distributed training jobs, automatic model tuning, model hosting, and even a feature store – all integrated under one umbrella. In this stack, S3 acts as the data lake and artifact store (training data is typically stored in S3, and SageMaker can automatically save models to S3), and Step Functions can orchestrate more complex pipelines by chaining SageMaker jobs (e.g., preprocess -> train -> deploy). The combination is essentially AWS's ML Ops offering: you use SageMaker for handling ML-specific tasks (training, endpoints, monitoring), and other AWS services for surrounding needs (S3 for storage, Step Functions or Lambda for automation).</div>",
+    "good_for": "<div>Teams already in the AWS ecosystem who want to minimize DevOps for ML. If compliance or security requires that data and processing stay in AWS, this stack is ideal. It's great for fast prototyping to production – a data scientist can go from a notebook to a deployed REST endpoint without leaving SageMaker. It also shines when you need managed auto-scaling for inference or one-click training on distributed hardware (AWS will handle provisioning of GPU instances, etc.).</div>",
+    "not_suitable_for": "<div>If you are cloud-agnostic or using another cloud, obviously this stack isn't applicable. Also, while SageMaker supports custom code, extremely complex or non-standard workflows might hit limitations in flexibility (in such cases, some teams prefer self-managed Kubeflow or Airflow for more control). If your team has already an established open-source MLOps stack, moving to SageMaker might require retooling. Cost can be a factor: SageMaker notebooks and large-scale training or hosting can be expensive for continuous usage.</div>",
+    "infrastructure": {
+      "hardware": "<div>All managed by AWS. Under the hood, when you launch a SageMaker training job, AWS spins up the necessary EC2 instances (you choose instance types in the config) – could be CPU or GPU – and tears them down after. For hosting, SageMaker provisions EC2 instances behind the scenes to serve the model (and can auto-scale them based on traffic). S3 is a managed storage that scales virtually infinitely – so no hardware concerns there beyond ensuring you have enough I/O performance (which AWS handles).</div>",
+      "deployment": "<div>You operate mostly through AWS console or AWS CLI/SDK. Deployment steps: upload data to S3, launch SageMaker training jobs via CLI/SDK (specifying the algorithm or Docker image and instance count/type), then when a model is trained, you can deploy it with a single API call that creates a SageMaker endpoint. Step Functions can be used to automate this flow (there is even a SageMaker Pipeline feature which uses Step Functions underneath). AWS will manage all the Docker containers, orchestrate distributed training if you requested multiple instances, and set up HTTPS endpoints for your deployed models.</div>",
+      "cloud": "<div>This stack is inherently cloud – specifically AWS. SageMaker is not available on-prem (except via AWS Outposts). It is best used when all your data and compute are already on AWS, so it can seamlessly access S3, IAM roles, etc. Using it implies embracing AWS managed services. The benefit is you get AWS's security, compliance, and scaling. If you are an AWS-centric organization, it can drastically reduce the time to deploy ML because everything is integrated.</div>"
+    }
+  },
+  {
+    "name": "Google Cloud Vertex AI (AutoML + Pipelines)",
+    "tools": [
+      {
+        "name": "Google Cloud Storage",
+        "documentation": "https://cloud.google.com/storage/docs",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20190630190631%21Google_Cloud_Logo.png",
+        "open_source": false,
+        "free": false
+      },
+      {
+        "name": "BigQuery",
+        "documentation": "https://cloud.google.com/bigquery/docs",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Google_BigQuery_Logo.png",
+        "open_source": false,
+        "free": false
+      },
+      {
+        "name": "Google Vertex AI",
+        "documentation": "https://cloud.google.com/vertex-ai/docs",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Google_Cloud_Platform_logo.svg",
+        "open_source": false,
+        "free": false
+      }
+    ],
+    "synergy": "<div>Vertex AI is Google Cloud's unified platform for machine learning, bringing together data from BigQuery, notebooks and training on Google Cloud, and automatic deployment to endpoints. It offers managed datasets, AutoML training or custom training, and a feature store. In this stack, BigQuery serves as a scalable data warehouse that can feed data into Vertex AI (either via BigQuery ML or by exporting to GCS). GCS is used to store any artifacts (like large image datasets or model files). <a class='cit-link' href='https://cloud.google.com/blog/topics/developers-practitioners/mlops-bigquery-ml-vertex-ai-model-registry#:~:text=Cloud%20cloud,quickly%20with%20five%20easy' target='_blank'>Vertex AI Pipelines</a> (built on Kubeflow Pipelines under the hood) allow you to orchestrate multi-step ML workflows on GCP infrastructure. <a class='cit-link' href='https://cloud.google.com/blog/products/ai-machine-learning/vodafones-ml-platform-built-on-vertex-ai#:~:text=Vodafone's%20ML%20platform%2C%20built%20on,tooling%20within%20a%20unified%20platform' target='_blank'>All tools are managed by Google and integrate</a>: for example, you can query data in BigQuery directly from a Vertex notebook, train a model on Vertex Training with that data, and deploy it, all with IAM-secured connections.</div>",
+    "good_for": "<div>Companies already using Google Cloud for data storage/analytics. If you have lots of data in BigQuery, Vertex AI makes it easy to build models off it (you can even do training directly from BigQuery via BigQuery ML or export to Vertex). It's great for taking advantage of Google's AI advancements (AutoML models, TPUs for training, etc.) without deep expertise – you can use AutoML to get reasonable models quickly. Vertex AI is also a good choice for building ML pipelines that need to run regularly on fresh data, due to its integration with Dataflow and Cloud Functions.</div>",
+    "not_suitable_for": "<div>Again, if you're not in the Google ecosystem, this stack is not applicable. Also, while Vertex AI supports custom code, extremely complex or non-standard workflows might hit limitations in flexibility (in such cases, some teams prefer self-managed Kubeflow or Airflow for more control). If your team has already an established open-source MLOps stack, moving to Vertex might require retooling. Cost can be a factor: BigQuery and Vertex prediction services are billed per use, which might be costly for very high volumes (some opt to deploy models on cheaper VM instances instead).</div>",
+    "infrastructure": {
+      "hardware": "<div>All managed by Google. Training jobs run on Google's AI Platform infrastructure – you can choose CPUs, GPUs, or TPUs and Google will provision the compute (either as ephemeral VMs or using GKE behind the scenes). BigQuery is serverless – it manages the hardware for queries (though you might allocate slots). GCS is also serverless storage. Vertex endpoints for deployed models run on managed VMs in Google's data centers; you specify scaling parameters but not the actual machines.</div>",
+      "deployment": "<div>You use the Google Cloud Console or SDK to create datasets, train models (either by uploading data and using AutoML or by submitting a training application package to Vertex Training). Once a model artifact is in Vertex AI, you can deploy it to an endpoint with a few clicks or an API call – GCP will then allocate resources and give you an endpoint URL. BigQuery data can be pipelined in via scheduled queries or Dataflow jobs. To automate, you might use Vertex AI Pipelines which are defined in Python (using TFX or KFP SDK) and then executed on the managed environment.</div>",
+      "cloud": "<div>This stack is entirely Google Cloud. Vertex AI does not run elsewhere. It leverages many GCP services (Cloud Storage, BigQuery, Dataflow, etc.), so it works best when all your data and compute are in GCP to minimize latency and egress fees. Many companies go all-in on GCP for data (eg. using BigQuery as a central warehouse) and then Vertex AI is a natural extension to add ML capabilities to that data. If you have a multi-cloud strategy, you'd use a different stack. But if GCP is your main environment, <a class='cit-link' href='https://cloud.google.com/blog/products/ai-machine-learning/vodafones-ml-platform-built-on-vertex-ai#:~:text=Vodafone's%20ML%20platform%2C%20built%20on,tooling%20within%20a%20unified%20platform' target='_blank'>Vertex AI provides one of the most integrated experiences on that cloud</a>.</div>"
+    }
+  }
+]
