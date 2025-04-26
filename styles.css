@@ -334,7 +334,9 @@ article.tool ul li .pixel-icon {
   padding: 2px 0;
   gap: 0.5rem;
 }
-
+#filter-name {
+  min-height: 38px;
+}
 /* Media Queries */
 @media (max-width: 768px) {
   body {

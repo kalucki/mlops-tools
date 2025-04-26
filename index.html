@@ -34,6 +34,80 @@
     <meta property="og:type" content="website" />
     <link rel="canonical" href="https://mlops-tools.com" />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Add the scroll-to-top button styles */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #ff4081;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        border: 2px solid #000;
+      }
+
+      .scroll-to-top:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 40px;
+          height: 40px;
+          font-size: 20px;
+        }
+      }
+
+      .selected-filters-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 16px;
+        min-height: 58px;
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      .filter-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 12px;
+        background-color: #ff4081;
+        color: white;
+        border-radius: 16px;
+        font-size: 14px;
+        border: 2px solid #000;
+        height: 32px;
+        box-sizing: border-box;
+      }
+
+      .filter-tag-remove {
+        cursor: pointer;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.2);
+        transition: background-color 0.2s;
+      }
+
+      .filter-tag-remove:hover {
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -122,7 +196,13 @@
       </div>
     </header>
 
+    <div id="selected-filters" class="selected-filters-container"></div>
+
     <main id="tools-list"></main>
+    
+    <!-- Add the scroll-to-top button -->
+    <button class="scroll-to-top" aria-label="Scroll to top">↑</button>
+
     <script src="multidropdown.js"></script>
     <script>
       let tools = [];
@@ -184,6 +264,77 @@
         });
       }
 
+      function renderFilterTags() {
+        const container = document.getElementById('selected-filters');
+        container.innerHTML = '';
+
+        // Get all selected values
+        const selectedFilters = {
+          category: Array.from(document.getElementById('filter-category').selectedOptions).map(o => o.value).filter(v => v !== ''),
+          license: Array.from(document.getElementById('filter-license').selectedOptions).map(o => o.value).filter(v => v !== ''),
+          platforms: Array.from(document.getElementById('filter-platforms').selectedOptions).map(o => o.value),
+          languages: Array.from(document.getElementById('filter-languages').selectedOptions).map(o => o.value),
+          integrations: Array.from(document.getElementById('filter-integrations').selectedOptions).map(o => o.value)
+        };
+
+        // Add checkbox filters if checked
+        if (document.getElementById('filter-open-source').checked) {
+          selectedFilters.openSource = ['Open Source'];
+        }
+        if (document.getElementById('filter-free-tier').checked) {
+          selectedFilters.freeTier = ['Free Tier'];
+        }
+
+        // Search term
+        const searchTerm = document.getElementById('filter-name').value;
+        if (searchTerm) {
+          selectedFilters.search = [searchTerm];
+        }
+
+        // Create tags for each selected filter
+        Object.entries(selectedFilters).forEach(([filterType, values]) => {
+          values.forEach(value => {
+            const tag = document.createElement('span');
+            tag.className = 'filter-tag pixel-border';
+            tag.innerHTML = `${value} <span class="filter-tag-remove">×</span>`;
+            
+            tag.querySelector('.filter-tag-remove').addEventListener('click', () => {
+              removeFilter(filterType, value);
+            });
+            
+            container.appendChild(tag);
+          });
+        });
+      }
+
+      function removeFilter(filterType, value) {
+        switch(filterType) {
+          case 'category':
+          case 'license':
+          case 'platforms':
+          case 'languages':
+          case 'integrations': {
+            const select = document.getElementById(`filter-${filterType}`);
+            Array.from(select.options).forEach(option => {
+              if (option.value === value) {
+                option.selected = false;
+              }
+            });
+            break;
+          }
+          case 'openSource':
+            document.getElementById('filter-open-source').checked = false;
+            break;
+          case 'freeTier':
+            document.getElementById('filter-free-tier').checked = false;
+            break;
+          case 'search':
+            document.getElementById('filter-name').value = '';
+            break;
+        }
+        applyFilters();
+      }
+
       function applyFilters() {
         let f = tools.slice();
         const name = document.getElementById('filter-name').value.toLowerCase();
@@ -235,6 +386,11 @@
           );
 
         renderTools(f);
+        
+        // Add a small delay to ensure the input event has completed
+        setTimeout(() => {
+          renderFilterTags();
+        }, 0);
       }
 
       function initializeApp() {
@@ -272,13 +428,50 @@
 
         renderTools(tools);
 
-        document.querySelectorAll('#filters input, #filters select').forEach((el) => {
-          el.addEventListener('input', applyFilters);
+        // Modify the event listeners to be more specific
+        document.querySelectorAll('#filters select').forEach((el) => {
+          el.addEventListener('change', applyFilters);
+        });
+
+        // Handle text input separately with debouncing
+        const searchInput = document.getElementById('filter-name');
+        let timeout;
+        searchInput.addEventListener('input', () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(applyFilters, 100);
+        });
+
+        // Handle checkboxes
+        document.querySelectorAll('#filters input[type="checkbox"]').forEach((el) => {
           el.addEventListener('change', applyFilters);
         });
       }
 
-      document.addEventListener('DOMContentLoaded', loadToolsData);
+      function handleScrollToTop() {
+        const scrollButton = document.querySelector('.scroll-to-top');
+        
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+            scrollButton.style.display = 'flex';
+          } else {
+            scrollButton.style.display = 'none';
+          }
+        });
+
+        // Scroll to top when clicked
+        scrollButton.addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        loadToolsData();
+        handleScrollToTop(); // Add the scroll-to-top initialization
+      });
     </script>
   </body>
 </html>
