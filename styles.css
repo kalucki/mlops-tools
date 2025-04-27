@@ -246,45 +246,51 @@ input[type="checkbox"] {
 
 #tools-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
   width: 100%;
 }
 
 article.tool {
   background: #fff;
-  padding: 1rem;
+  padding: 1.5rem;
   border: 4px solid #000;
   box-shadow: 4px 4px 0 #999;
-  border-radius: 4px;
-  transition: transform 0.2s;
-  font-family: sans-serif;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: system-ui, -apple-system, sans-serif;
   width: 100%;
   box-sizing: border-box;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  min-height: 300px;
 }
 
 article.tool:hover {
-  box-shadow: 8px 8px 4px #999;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 #999;
 }
 
 article.tool h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.2em;
+  margin: 0;
+  font-size: 1.4em;
   font-family: monospace;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f0f0f0;
 }
 
 article.tool h2 a {
   text-decoration: none;
   color: #ff4081;
+  font-weight: 700;
   position: relative;
   padding: 2px 4px;
-  transition: all 0.1s ease;
+  font-size: 1.4rem;
+  transition: all 0.2s ease;
 }
 
 article.tool:hover h2 a {
@@ -301,42 +307,83 @@ article.tool:active h2 a {
 }
 
 article.tool p {
-  margin: 0 0 0.8rem;
-  line-height: 1.4;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  margin: 0;
+  line-height: 1.6;
+  color: #444;
+  font-size: 0.95rem;
 }
 
 article.tool ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 0.9em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
 }
 
-article.tool ul li {
-  margin-bottom: 0.3rem;
+.tool-metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tool-status {
   display: flex;
-  align-items: center;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+  margin-top: auto;
 }
 
-article.tool ul li .pixel-icon {
-  font-size: 1.2rem;
-  margin-right: 0.5rem;
-} 
+.tool-status span {
+  display: inline-flex;
+  align-items: center;
+}
+
 .tool-item {
   display: flex;
-  align-items: start;
-  padding: 2px 0;
-  gap: 0.5rem;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
 }
+
+.tool-item:hover {
+  background: #f0f0f0;
+}
+
+.tool-item strong {
+  display: none;
+}
+
+.tool-item .pixel-icon {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+/* Status indicators */
+.tool-item:has(strong:contains("Open Source")),
+.tool-item:has(strong:contains("Free Tier")) {
+  background: #e8f5e9;
+}
+
+.tool-item:has(strong:contains("Open Source")):hover,
+.tool-item:has(strong:contains("Free Tier")):hover {
+  background: #c8e6c9;
+}
+
 #filter-name {
   min-height: 38px;
 }
+
 /* Media Queries */
 @media (max-width: 768px) {
   body {
@@ -353,7 +400,15 @@ article.tool ul li .pixel-icon {
   }
 
   article.tool {
-    padding: 0.8rem;
+    padding: 1rem;
+  }
+
+  article.tool ul {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-item {
+    padding: 0.4rem;
   }
 
   .pixel-icon {
@@ -363,7 +418,18 @@ article.tool ul li .pixel-icon {
   .multiselect-dropdown-list {
     max-height: 50vh !important;
   }
-}@media (max-width: 480px) {
+
+  #tools-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .tool-status {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
   h1 {
     font-size: 1.2rem;
   }

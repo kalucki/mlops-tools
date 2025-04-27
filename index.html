@@ -252,15 +252,17 @@
           a.className = 'tool';
           a.innerHTML = `<h2><span class="pixel-icon">👾</span> <a href="${t.documentation ?? '#'}" target="_blank" rel="noopener">${t.name ?? 'Unnamed Tool'}</a></h2>
           <p>${t.description ?? 'No description available.'}</p>
-          <ul>
-            <li class="tool-item"><span class="pixel-icon">📂</span><strong>Category:</strong> ${t.category ?? 'Uncategorized'}</li>
-            <li class="tool-item"><span class="pixel-icon">📄</span><strong>License:</strong> ${t.license ?? 'Not specified'}</li>
-            <li class="tool-item"><span class="pixel-icon">🔓</span><strong>Open Source:</strong> ${formatBoolean(t.open_source)}</li>
-            <li class="tool-item"><span class="pixel-icon">🎁</span><strong>Free Tier:</strong> ${formatBoolean(t.free)}</li>
-            <li class="tool-item"><span class="pixel-icon">💻</span><strong>Platforms:</strong> ${formatList(t.supported_platforms)}</li>
-            <li class="tool-item"><span class="pixel-icon">📝</span><strong>Languages:</strong> ${formatList(t.languages)}</li>
-            <li class="tool-item"><span class="pixel-icon">🧩</span><strong>Integrations:</strong> ${formatList(t.integrations)}</li>
-          </ul>`;
+          <ul class="tool-metadata">
+            <li class="tool-item"><span class="pixel-icon">📂</span>${t.category ?? 'Uncategorized'}</li>
+            <li class="tool-item"><span class="pixel-icon">📄</span>${t.license ?? 'Not specified'}</li>
+            <li class="tool-item"><span class="pixel-icon">💻</span>${formatList(t.supported_platforms)}</li>
+            <li class="tool-item"><span class="pixel-icon">📝</span>${formatList(t.languages)}</li>
+            <li class="tool-item"><span class="pixel-icon">🧩</span>${formatList(t.integrations)}</li>
+          </ul>
+          <div class="tool-status">
+            <span>Open Source: ${formatBoolean(t.open_source)}</span>
+            <span>Free: ${formatBoolean(t.free)}</span>
+          </div>`;
           c.appendChild(a);
         });
       }
