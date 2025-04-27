@@ -71,9 +71,35 @@
       }
 
       .tool-card h3 {
-        margin: 0 0 1rem;
-        font-size: 1.2em;
+        margin: 0;
+        font-size: 1.4em;
         font-family: monospace;
+        display: flex;
+        align-items: center;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .tool-card h3 a {
+        color: #ff4081;
+        font-weight: 700;
+        text-decoration: none;
+        padding: 2px 4px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .tool-card:hover h3 a {
+        background: #000;
+        color: #fff;
+        text-shadow: 2px 2px #ff4081;
+        outline: 2px solid #ff4081;
+        outline-offset: 1px;
+      }
+
+      .tool-card:active h3 a {
+        transform: translate(2px, 2px);
+        text-shadow: none;
       }
 
       .tool-card a {
@@ -92,7 +118,7 @@
       .stack-section h4 {
         font-family: monospace;
         margin: 0 0 1.5rem;
-        font-size: 1.4em;
+        font-size: 1.6em;
         color: #333;
         border-bottom: 2px solid #eee;
         padding-bottom: 0.5rem;
@@ -217,7 +243,10 @@
         transition: all 0.3s ease;
         border: 2px solid #000;
       }
-
+      .stack-title {
+        color: black !important;
+        font-size: 3rem !important;
+      }
       .scroll-to-top:hover {
         transform: translateY(-3px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -318,8 +347,7 @@
           // Tools section
           const toolsHtml = stack.tools.map(tool => `
             <div class="tool-card">
-              <h3>${tool.name}</h3>
-              <a href="${tool.documentation}" target="_blank" rel="noopener">Documentation</a>
+              <h3><a href="${tool.documentation}" target="_blank" rel="noopener">${tool.name}</a></h3>
               <div style="margin-top: 0.5rem">
                 <small>
                   ${tool.open_source ? '✓ Open Source' : '✗ Proprietary'}<br>
@@ -334,7 +362,7 @@
           
           // Build the HTML structure
           const contentHtml = `
-            <h2>${stack.name}</h2>
+            <h2 class="stack-title">${stack.name}</h2>
             <div class="stack-tools">
               ${toolsHtml}
             </div>
