@@ -250,7 +250,7 @@
         list.forEach((t) => {
           const a = document.createElement('article');
           a.className = 'tool';
-          a.innerHTML = `<h2><span class="pixel-icon">👾</span> <a href="${t.documentation ?? '#'}" target="_blank" rel="noopener">${t.name ?? 'Unnamed Tool'}</a></h2>
+          a.innerHTML = `<h2><span class="pixel-icon">👾</span> <a href="tool.html?name=${encodeURIComponent(t.name)}" target="_blank" rel="noopener">${t.name ?? 'Unnamed Tool'}</a></h2>
           <p>${t.description ?? 'No description available.'}</p>
           <ul class="tool-metadata">
             <li class="tool-item"><span class="pixel-icon">📂</span>${t.category ?? 'Uncategorized'}</li>
@@ -260,8 +260,8 @@
             <li class="tool-item"><span class="pixel-icon">🧩</span>${formatList(t.integrations)}</li>
           </ul>
           <div class="tool-status">
-            <span>Open Source: ${formatBoolean(t.open_source)}</span>
-            <span>Free: ${formatBoolean(t.free)}</span>
+            <span>${t.open_source ? 'Open Source' : 'Not Open Source'}</span>
+            <span>${t.free ? 'Free Tier' : 'Paid'}</span>
           </div>`;
           c.appendChild(a);
         });
