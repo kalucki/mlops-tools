@@ -167,11 +167,47 @@
             display: flex;
             align-items: center;
         }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0 0 20px 0;
+            color: #fff;
+            background: #000 !important;
+            box-shadow: none !important;
+            text-shadow: 2px 2px #ff4081;
+            outline: 2px solid #ff4081;
+            outline-offset: 1px;
+            padding: 2px 4px;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            width: fit-content;
+        }
     </style>
 </head>
 <body>
+    <header class="header-container">
+        <a href="/" style="text-decoration: none; color: inherit;">
+            <h1
+                class="pixel-border"
+                style="display: flex; flex-direction: column; gap: 10px; max-width: fit-content"
+            >
+                <div style="display: flex; align-items: center">👾 ML Ops Directory</div>
+                <span style="font-size: 0.7rem; margin: 0 auto">
+                    Curated List of ML Ops Tools</span
+                >
+            </h1>
+        </a>
+        <nav>
+            <a href="mlops-tech-architecture-examples/index.html" class="nav-link pixel-border">🛠️ ML Tech Stack Examples</a>
+        </nav>
+    </header>
+
     <div class="tool-details">
-        <a href="/" class="back-link">← Back to Directory</a>
         <div id="tool-content">
             Loading tool details...
         </div>
