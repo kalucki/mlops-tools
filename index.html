@@ -108,6 +108,18 @@
       .filter-tag-remove:hover {
         background-color: rgba(0, 0, 0, 0.4);
       }
+
+      .highlight {
+        background-color: #ff4081;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 2px solid #000;
+      }
+
+      .tool-metadata .highlight {
+        margin: 0 2px;
+      }
     </style>
   </head>
   <body>
@@ -242,22 +254,53 @@
         c.innerHTML = '';
         if (!list.length) return (c.textContent = 'No tools found.');
 
-        const formatList = (arr) =>
-          Array.isArray(arr) ? arr.join(', ') : 'Not specified';
+        // Get all active filters
+        const activeFilters = {
+          category: Array.from(document.getElementById('filter-category').selectedOptions).map(o => o.value).filter(v => v !== ''),
+          license: Array.from(document.getElementById('filter-license').selectedOptions).map(o => o.value).filter(v => v !== ''),
+          platforms: Array.from(document.getElementById('filter-platforms').selectedOptions).map(o => o.value),
+          languages: Array.from(document.getElementById('filter-languages').selectedOptions).map(o => o.value),
+          integrations: Array.from(document.getElementById('filter-integrations').selectedOptions).map(o => o.value)
+        };
+
+        const searchTerm = document.getElementById('filter-name').value.toLowerCase();
+
+        const formatList = (arr, filterType) => {
+          if (!Array.isArray(arr)) return 'Not specified';
+          return arr.map(item => {
+            const shouldHighlight = activeFilters[filterType]?.includes(item) || 
+              (searchTerm && item.toLowerCase().includes(searchTerm));
+            return shouldHighlight ? `<span class="highlight">${item}</span>` : item;
+          }).join(', ');
+        };
+
         const formatBoolean = (value) =>
           value === undefined ? 'Not specified' : value ? 'Yes' : 'No';
 
         list.forEach((t) => {
           const a = document.createElement('article');
           a.className = 'tool';
-          a.innerHTML = `<h2><span class="pixel-icon">👾</span> <a href="tool.html?name=${encodeURIComponent(t.name)}">${t.name ?? 'Unnamed Tool'}</a></h2>
-          <p>${t.description ?? 'No description available.'}</p>
+          
+          // Highlight name if it matches search
+          const name = t.name ?? 'Unnamed Tool';
+          const highlightedName = searchTerm && name.toLowerCase().includes(searchTerm) 
+            ? `<span class="highlight">${name}</span>` 
+            : name;
+
+          // Highlight description if it matches search
+          const description = t.description ?? 'No description available.';
+          const highlightedDescription = searchTerm && description.toLowerCase().includes(searchTerm)
+            ? description.replace(new RegExp(searchTerm, 'gi'), match => `<span class="highlight">${match}</span>`)
+            : description;
+
+          a.innerHTML = `<h2><span class="pixel-icon">👾</span> <a href="tool.html?name=${encodeURIComponent(t.name)}">${highlightedName}</a></h2>
+          <p>${highlightedDescription}</p>
           <ul class="tool-metadata">
-            <li class="tool-item"><span class="pixel-icon">📂</span>${t.category ?? 'Uncategorized'}</li>
-            <li class="tool-item"><span class="pixel-icon">📄</span>${t.license ?? 'Not specified'}</li>
-            <li class="tool-item"><span class="pixel-icon">💻</span>${formatList(t.supported_platforms)}</li>
-            <li class="tool-item"><span class="pixel-icon">📝</span>${formatList(t.languages)}</li>
-            <li class="tool-item"><span class="pixel-icon">🧩</span>${formatList(t.integrations)}</li>
+            <li class="tool-item"><span class="pixel-icon">📂</span>${formatList([t.category], 'category')}</li>
+            <li class="tool-item"><span class="pixel-icon">📄</span>${formatList([t.license], 'license')}</li>
+            <li class="tool-item"><span class="pixel-icon">💻</span>${formatList(t.supported_platforms, 'platforms')}</li>
+            <li class="tool-item"><span class="pixel-icon">📝</span>${formatList(t.languages, 'languages')}</li>
+            <li class="tool-item"><span class="pixel-icon">🧩</span>${formatList(t.integrations, 'integrations')}</li>
           </ul>
           <div class="tool-status">
             <span>${t.open_source ? 'Open Source' : 'Not Open Source'}</span>
