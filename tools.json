@@ -285,7 +285,7 @@
     "description": "Extensible MLOps framework to create reproducible ML pipelines, with integrations to various tools.",
     "supported_platforms": ["Linux", "macOS", "Windows"],
     "languages": ["Python"],
-    "integrations": ["TensorFlow", "PyTorch", "Kubeflow", "Airflow", "Docker"]
+    "integrations": ["TensorFlow", "PyTorch", "Kubeflow", "Airflow", "AWS", "GCP", "Azure", "MLflow", "Weights & Biases", "Great Expectations", "Label Studio", "Kubernetes", "Databricks", "Skypilot", "HyperAI", "Modal", "Spark", "Comet", "Neptune", "Slack", "Discord", "Argilla", "Evidently", "Deepchecks", "Whylogs", "Feast", "Seldon", "BentoML"]
   },
   {
     "name": "Dagster",
